@@ -1,12 +1,16 @@
 import time
 
-class BaseExtractor: 
+class BaseExtractor:
+    """Base class for all extractors."""
     def __init__(self, path):
         self.path = path
 
 
 def timing(func):
     def wrapper(*args, **kwargs):
+        """
+        Checking how long does one task take.
+        """
         start = time.time()
         result = func(*args, **kwargs)
         end = time.time()

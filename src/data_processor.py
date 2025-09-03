@@ -2,21 +2,32 @@ from extractors import BaseExtractor, CSVExtractor, JSONVExtractor
 
 
 class DataProcessor:
+    """
+    A class that manages data extraction and delegates operations
+    to a given `BaseExtractor` implementation.
 
+    This class acts as a wrapper, allowing you to switch extractors
+    dynamically while keeping a consistent interface for working
+    with the extracted data.
+    """
     def __init__(self, extractor: BaseExtractor):
         self._extractor = extractor
         #self._displayer = displayer   #??? jst potrzeba tych wszystkich funkcji? czy już  samym extraktorze mogę mieć 
 
     def set_extractor(self, extractor):
+        """Replace the current extractor with a new one."""
         self._extractor = extractor
 
     def extract_data(self):
+        """Extract raw data using the current extractor."""
         return self._extractor.extract()
     
     def print_tree_data(self, data):
+        """Print or display data in a tree-like structure."""
         return self._extractor.print_tree(data)
 
     def preview_data(self, data, n):
+        """Preview the first N records/rows/items of the data."""
         return self._extractor.preview(data, n)
 
 
