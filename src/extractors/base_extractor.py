@@ -1,6 +1,7 @@
 import time
 
-class BaseExtractor: 
+class BaseExtractor:
+    """Base class for all extractors."""
     def __init__(self, path):
         self.path = path
 
