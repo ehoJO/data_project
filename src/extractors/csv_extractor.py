@@ -1,19 +1,20 @@
-from base_extractor import BaseExtractor, timing
+from .base_extractor import BaseExtractor, timing
+from typing import List, Dict, Any, Optional
 import csv
 
 
 class CSVExtractor(BaseExtractor):
-    def __init__(self, path: str, delimiter: str):
+    def __init__(self, path: str, delimiter: str = ';'):
+        super().__init__(path)
         self.extension = ".csv"
         self.delimiter = delimiter
-        self.columns = []
-        super().__init__(path)
+        self.columns: List[str] = []
 
-    def set_columns(self, columns):
-        self.columns = columns
+    def set_columns(self, columns: Optional[List[str]]):
+        self.columns = columns or []
 
     @timing
-    def extract(self):
+    def extract(self) -> List[Dict[str, Any]]:
         with open(self.path, newline='', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=self.delimiter)
             data = [row for row in reader]

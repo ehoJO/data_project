@@ -1,4 +1,4 @@
-from base_extractor import BaseExtractor, timing
+from .base_extractor import BaseExtractor, timing
 import time
 import json
 
@@ -6,10 +6,9 @@ import json
 
 class JSONVExtractor(BaseExtractor):
     def __init__(self, path: str): 
-        self.extension = ".json"
-        #self.config = config
-        self.tree = []
         super().__init__(path)
+        self.extension = ".json"
+        self.tree = []
 
     def set_tree(self, tree):
         self.tree = tree

@@ -1,4 +1,5 @@
-from extractors import BaseExtractor, CSVExtractor, JSONVExtractor
+from .extractors import BaseExtractor, CSVExtractor, JSONVExtractor, RestAPIExtractor
+from typing import Optional, Any
 
 
 class DataProcessor:
@@ -12,41 +13,22 @@ class DataProcessor:
     """
     def __init__(self, extractor: BaseExtractor):
         self._extractor = extractor
-        #self._displayer = displayer   #??? jst potrzeba tych wszystkich funkcji? czy już  samym extraktorze mogę mieć 
+        #self._displayer = displayer   #??? na później
 
     def set_extractor(self, extractor):
         """Replace the current extractor with a new one."""
         self._extractor = extractor
 
-    def extract_data(self):
+    def extract_data(self, *args, **kwargs) -> Any:
         """Extract raw data using the current extractor."""
-        return self._extractor.extract()
+        return self._extractor.extract(*args, **kwargs)
     
-    def print_tree_data(self, data):
+    def print_tree_data(self, data: Any, *args, **kwargs):
         """Print or display data in a tree-like structure."""
-        return self._extractor.print_tree(data)
-
-    def preview_data(self, data, n):
+        return self._extractor.print_tree(data, *args, **kwargs)
+    
+    def preview_data(self, data: Any, n: int = 5, resource: Optional[str] = None):
         """Preview the first N records/rows/items of the data."""
-        return self._extractor.preview(data, n)
-
-
-if __name__ == "__main__":
-    csv_path = "first_tasks/task3_data/ecommerce_clickstream_transactions.csv"
-    json_path = "first_tasks/weather.json"
-
-    csv_extractor = CSVExtractor(csv_path, ';')
-    json_extractor = JSONVExtractor(json_path)
-
-    # czym jest kontekst a strategia? bo chyba rozumiałam i już nie rozumiem xd
-
-    processor = DataProcessor(csv_extractor)
-    data = processor.extract_data()
-    print(processor.print_tree_data(data))
-
-    processor.set_extractor(json_extractor)
-    data2 = processor.extract_data()#processor.print_tree_data()
-    print("\n".join(processor.print_tree_data(data2)))
-
-
-    print(data2)
+        if resource is not None:
+            return self._extractor.preview(data, n=n, resource=resource)
+        return self._extractor.preview(data, n=n)

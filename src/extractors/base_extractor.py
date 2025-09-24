@@ -1,9 +1,13 @@
 import time
+from abc import ABC, abstractmethod
+import pandas as pd
 
-class BaseExtractor:
+class BaseExtractor(ABC):
     """Base class for all extractors."""
-    def __init__(self, path):
-        self.path = path
+    @abstractmethod
+    def extract(self) -> pd.DataFrame:
+        pass
+
 
 
 def timing(func):
