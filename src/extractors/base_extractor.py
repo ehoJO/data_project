@@ -1,7 +1,13 @@
+from abc import ABC, abstractmethod
 import time
+import pandas as pd
 
-class BaseExtractor:
+class BaseExtractor(ABC):
     """Base class for all extractors."""
+    @abstractmethod
+    def extract(self, *args) -> pd.DataFrame:
+        pass
+
     def __init__(self, path):
         self.path = path
 
